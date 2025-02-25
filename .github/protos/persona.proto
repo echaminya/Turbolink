@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package neoworlder;
+
+message Vector {
+    float x = 1;
+    float y = 2;
+    float z = 3;
+}
+
+message Resource {
+    string resource_name = 1;
+    string region = 2;
+    int32 resource_count = 3;
+}
+
+message Building {
+    string building_name = 1;
+    float building_energy_consumption = 2;
+    float building_pdi_rating = 3;
+    string building_type = 4;
+    float building_saleable_unit = 5;
+    float energy_production = 6;
+    float resource_extraction_rate = 7;
+    float pollution_count = 8;
+    repeated int32 worker_slots = 9;
+    float worker_extraction_rate = 10;
+    int32 price = 11;
+}
+
+message Land {
+    string land_id = 1;
+    string land_owner = 2;
+    string land_name = 3;
+    Vector location = 4;
+    float pdi_count = 5;
+    float pdi_rating = 6;
+    repeated Resource resource_data = 7;
+}
+
+message Echo {
+    Vector echo_location = 1;
+    string echo_text = 2;
+}
+
+message AvatarCharacterData {
+    string face_id = 1;
+    string hair_id = 2;
+    string torso_id = 3;
+    string legs_id = 4;
+    string hands_id = 5;
+    string skin_color_id = 6;
+    string shirt_id = 7;
+    string trouser_id = 8;
+    string handwear_id = 9;
+    string footwear_id = 10;
+    string head_accessory_id = 11;
+    string face_accessory_id = 12;
+}
+
+message Avatar {
+    string avatar_name = 1;
+    string avatar_id = 2;
+    bool is_selected = 3;
+    repeated AvatarCharacterData avatar_character_data = 4;
+}
+
+message Transaction {
+    string transaction_id = 1;
+    string transaction_type = 2;
+    string seller_id = 3;
+    string buyer_id = 4;
+    string currency = 5;
+    int32 price = 6;
+}
+
+message PlayerStats {
+    string player_id = 1;
+    string player_name = 2;
+    string player_username = 3;
+    string player_wallet = 4;
+    int32 mdr = 5;
+    int32 credit = 6;
+    int32 land_count = 7;
+    int32 building_count = 8;
+    float energy_produced = 9;
+    float energy_capacity = 10;
+    repeated Transaction sales_data = 11;
+    repeated Transaction purchase_data = 12;
+    repeated Land land_data = 13;
+    repeated Building building_data = 14;
+    repeated Avatar avatar_data = 15;
+    Avatar selected_avatar = 16;
+}
+
+message PersonaGoal {
+    Vector starting_position = 1;
+    Vector destination_position = 2;
+}
+
+message PersonaData {
+    string persona_id = 1;
+    string owner_id = 2;
+    string ai_state = 3;
+    string current_location = 4;
+    float credits = 5;
+    Avatar persona_avatar = 6;
+    repeated PersonaGoal persona_goal_data = 7;
+    repeated Transaction sales_data = 8;
+    repeated Transaction purchase_data = 9;
+}
+
+service PersonaService {
+    rpc getPersonasData (GetPersonasDataRequest) returns (GetPersonasDataResponse) {}
+}
+
+message GetPersonasDataRequest {
+}
+
+message GetPersonasDataResponse {
+    repeated PersonaData persona_data = 1;
+}
